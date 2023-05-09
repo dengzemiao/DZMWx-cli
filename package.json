@@ -1,0 +1,15 @@
+{
+  "name": "wxci",
+  "version": "1.0.0",
+  "description": "快捷发布微信小程序",
+  "scripts": {
+    "dev:mp1": "cross-env NODE_ENV=development APPID=wxappid VERSION=1.0.0 node index.js",
+    "build:mp1": "cross-env NODE_ENV=production APPID=wxappid VERSION=1.0.0 node index.js",
+    "dev:mp2": "cross-env NODE_ENV=development APPID=wxappid VERSION=1.0.0 node index.js",
+    "build:mp2": "cross-env NODE_ENV=production APPID=wxappid VERSION=1.0.0 node index.js"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "miniprogram-ci": "^1.9.5"
+  }
+}
