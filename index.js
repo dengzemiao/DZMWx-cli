@@ -3,6 +3,11 @@
 const ci = require('miniprogram-ci');
 const fs = require('fs');
 const path = require('path');
+const colors = require('colors');
+const dayjs = require('dayjs');
+
+// 提示
+console.log('============================== 开始发布 =============================='.bgGreen);
 
 // 项目文件夹名
 const fileName = process.env.NODE_ENV === 'production' ? 'build' : 'dev';
@@ -15,14 +20,21 @@ const version = process.env.VERSION;
 // 小程序对应的上传私钥地址
 const keyPath = `./key/private.${appid}.key`
 
+// 记录日志
+setLog('开始上传...')
+
 // 项目是否打包
 if (!fs.existsSync(path.join(__dirname, filePath))) {
-	console.log('Error：找不到小程序打包后的项目工程，请先打包!')
+	console.log(`Error：找不到小程序《${appid}》打包后的项目工程，请先打包!`.red)
+	// 记录日志
+	setLog('找不到项目工程！')
 	return
 }
 // 是否存在对应小程序的上传私钥
 if (!fs.existsSync(path.join(__dirname, keyPath))) {
-	console.log('Error：找不到小程序上传私钥，请联系小程序管理生成并导入 key 文件中!')
+	console.log(`Error：找不到小程序《${appid}》上传私钥，请联系小程序管理员生成并导入 key 文件中!`.red)
+	// 记录日志
+	setLog('找不到上传私钥！')
 	return
 }
 // 读取微信项目配置文件，做一下校验，因为命令提交不会管appid是否一致，都能正常提交
@@ -33,7 +45,9 @@ if (config.appid === appid) {
 	run()
 } else {
 	// 不匹配，中断
-	console.log('Error：当前 dist 文件中打包的微信小程序工程 appid 与指定提交的 appid 不匹配，请重新打包对应的微信小程序!')
+	console.log(`Error：本地 dist 文件中小程序包的 appid《${config.appid}》 与指定提交的 appid《${appid}》 不匹配，请重新打包对应的微信小程序!`.red)
+	// 记录日志
+	setLog(`本地 dist 文件中小程序包的 appid《${config.appid}》 与指定提交的 appid《${appid}》 不匹配`)
 }
 
 // 执行
@@ -70,9 +84,21 @@ async function run() {
 		// onProgressUpdate: console.log,
 	})
 	// 上传结果
-	console.log('==========================================');
-	console.log(`APPID：${config.appid}\n项目名：${config.projectname}\n版本号：${version}\n打包环境：${process.env.NODE_ENV}\n上传结果：成功`);
-	console.log('测试、发包直接前往：小程序后台管理【版本管理】中扫码体验、测试、发包！');
+	console.log('=============================='.bgGreen);
+	console.log(`APPID：${config.appid}\n项目名：${config.projectname}\n版本号：${version}\n打包环境：${process.env.NODE_ENV}\n上传结果：成功`.green);
+	console.log('测试、发包直接前往：小程序后台管理【版本管理】中扫码体验、测试、发包！'.yellow);
 	// console.log(uploadResult);
-	console.log('==========================================');
+	console.log('=============================='.bgGreen);
+	// 记录日志
+	setLog(`上传成功！`)
+}
+
+// 日志记录
+function setLog(msg) {
+	// 文件名称
+	const logFileName = 'log.txt'
+	// 创建日志文件
+	if (!fs.existsSync(path.join(__dirname, logFileName))) { fs.writeFileSync(logFileName, '', 'utf-8') }
+	// 写入进度
+	fs.appendFileSync(logFileName, `【 ${dayjs().format('YYYY-MM-DD HH:mm:ss')} 】- ${appid} - ${version} - ${process.env.NODE_ENV}：${msg}\n`, 'utf-8')
 }

@@ -9,7 +9,9 @@
     "build:mp2": "cross-env NODE_ENV=production APPID=wxappid VERSION=1.0.0 node index.js"
   },
   "devDependencies": {
+    "colors": "^1.4.0",
     "cross-env": "^7.0.3",
+    "dayjs": "^1.11.7",
     "miniprogram-ci": "^1.9.5"
   }
 }
