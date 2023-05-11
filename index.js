@@ -85,8 +85,8 @@ async function run() {
 	})
 	// 上传结果
 	console.log('=============================='.bgGreen);
-	console.log(`APPID：${config.appid}\n项目名：${config.projectname}\n版本号：${version}\n打包环境：${process.env.NODE_ENV}\n上传结果：成功\n上传时间：${dayjs().format('YYYY-MM-DD HH:mm:ss')}`.green);
-	console.log('测试、发包直接前往：小程序后台管理【版本管理】中扫码体验、测试、发包！'.yellow);
+	console.log(`项目名称：${config.projectname}(${config.appid})\n项目版本：${version}\n打包环境：${process.env.NODE_ENV}\n上传结果：成功\n上传时间：${dayjs().format('YYYY-MM-DD HH:mm:ss')}`.green);
+	console.log('提示信息：测试、发包直接前往：小程序后台管理【版本管理】中扫码体验、测试、发包！'.yellow);
 	// console.log(uploadResult);
 	console.log('=============================='.bgGreen);
 	// 记录日志
