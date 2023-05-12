@@ -20,9 +20,6 @@ const version = process.env.VERSION;
 // 小程序对应的上传私钥地址
 const keyPath = `./key/private.${appid}.key`
 
-// 记录日志
-setLog('开始上传...')
-
 // 项目是否打包
 if (!fs.existsSync(path.join(__dirname, filePath))) {
 	console.log(`Error：找不到小程序《${appid}》打包后的项目工程，请先打包!`.red)
@@ -39,6 +36,8 @@ if (!fs.existsSync(path.join(__dirname, keyPath))) {
 }
 // 读取微信项目配置文件，做一下校验，因为命令提交不会管appid是否一致，都能正常提交
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, `${filePath}/project.config.json`), 'utf8'))
+// 记录日志
+setLog('开始上传...')
 // 校验 appid 是否一致
 if (config.appid === appid) {
 	// 匹配，正常跑起来
@@ -100,5 +99,5 @@ function setLog(msg) {
 	// 创建日志文件
 	if (!fs.existsSync(path.join(__dirname, logFileName))) { fs.writeFileSync(logFileName, '', 'utf-8') }
 	// 写入进度
-	fs.appendFileSync(logFileName, `【 ${dayjs().format('YYYY-MM-DD HH:mm:ss')} 】- ${appid} - ${version} - ${process.env.NODE_ENV}：${msg}\n`, 'utf-8')
+	fs.appendFileSync(logFileName, `【 ${dayjs().format('YYYY-MM-DD HH:mm:ss')} 】- ${appid} - ${version} - ${process.env.NODE_ENV}:${config.projectname ? `【${config.projectname}】` : ' '}${msg}\n`, 'utf-8')
 }
