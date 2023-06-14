@@ -4,7 +4,6 @@ const ci = require('miniprogram-ci');
 const fs = require('fs');
 const path = require('path');
 const colors = require('colors');
-const dayjs = require('dayjs');
 
 // 提示
 console.log('============================== 开始发布 =============================='.bgGreen);
@@ -84,7 +83,7 @@ async function run() {
 	})
 	// 上传结果
 	console.log('=============================='.bgGreen);
-	console.log(`项目名称：${config.projectname}(${config.appid})\n项目版本：${version}\n打包环境：${process.env.NODE_ENV}\n上传结果：成功\n上传时间：${dayjs().format('YYYY-MM-DD HH:mm:ss')}`.green);
+	console.log(`项目名称：${config.projectname}(${config.appid})\n项目版本：${version}\n打包环境：${process.env.NODE_ENV}\n上传结果：成功\n上传时间：${nowDate()}`.green);
 	console.log('提示信息：测试、发包直接前往：小程序后台管理【版本管理】中扫码体验、测试、发包！'.yellow);
 	// console.log(uploadResult);
 	console.log('=============================='.bgGreen);
@@ -99,5 +98,22 @@ function setLog(msg) {
 	// 创建日志文件
 	if (!fs.existsSync(path.join(__dirname, logFileName))) { fs.writeFileSync(logFileName, '', 'utf-8') }
 	// 写入进度
-	fs.appendFileSync(logFileName, `【 ${dayjs().format('YYYY-MM-DD HH:mm:ss')} 】- ${appid} - ${version} - ${process.env.NODE_ENV}:${config.projectname ? `【${config.projectname}】` : ' '}${msg}\n`, 'utf-8')
+	fs.appendFileSync(logFileName, `【 ${nowDate()} 】- ${appid} - ${version} - ${process.env.NODE_ENV}:${config.projectname ? `【${config.projectname}】` : ' '}${msg}\n`, 'utf-8')
+}
+
+// 获取当前时间
+function nowDate() {
+	var date = new Date()
+	var year = date.getFullYear()
+	var month = date.getMonth() + 1
+	var day = date.getDate()
+	var hour = date.getHours()
+	var minute = date.getMinutes()
+	var second = date.getSeconds()
+	if (month >= 1 && month <= 9) { month = '0' + month }
+	if (day >= 0 && day <= 9) { day = '0' + day }
+	if (hour >= 0 && hour <= 9) { hour = '0' + hour }
+	if (minute >= 0 && minute <= 9) { minute = '0' + minute }
+	if (second >= 0 && second <= 9) { second = '0' + second }
+	return `${year}-${month}-${day} ${hour}:${minute}:${second}`
 }
