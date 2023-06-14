@@ -1,6 +1,6 @@
 # DZMWx-cli
 
-- 基于 [miniprogram-ci](https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html) 封装的微信小程序自动化发包脚本，常用于一份代码对应多个项目(包)的场景！
+- 基于 [miniprogram-ci](https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html) 封装的微信小程序自动化发包脚本，常用于各种情况的批量自动发包！
 
 - 使用步骤
 
