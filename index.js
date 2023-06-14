@@ -1,21 +1,21 @@
 // 文档地址：https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html#%E4%B8%8A%E4%BC%A0
 // CSDN文档：https://blog.csdn.net/qq_42880714/article/details/126441004
-const ci = require('miniprogram-ci');
-const fs = require('fs');
-const path = require('path');
-const colors = require('colors');
+const ci = require('miniprogram-ci')
+const fs = require('fs')
+const path = require('path')
+const colors = require('colors')
 
 // 提示
-console.log('============================== 开始发布 =============================='.bgGreen);
+console.log('============================== 开始发布 =============================='.bgGreen)
 
 // 项目文件夹名
-const fileName = process.env.NODE_ENV === 'production' ? 'build' : 'dev';
+const fileName = process.env.NODE_ENV === 'production' ? 'build' : 'dev'
 // 项目文件路径
 const filePath = `./dist/${fileName}/mp-weixin`
 // 微信小程序ID
-const appid = process.env.APPID;
+const appid = process.env.APPID
 // 微信小程序版本
-const version = process.env.VERSION;
+const version = process.env.VERSION
 // 小程序对应的上传私钥地址
 const keyPath = `./key/private.${appid}.key`
 
@@ -69,7 +69,7 @@ async function run() {
 	})
 	try {
 		// 创建任务 - 上传
-		const uploadResult = await ci.upload({
+		const result = await ci.upload({
 			// 项目
 			project,
 			// 版本
@@ -87,11 +87,11 @@ async function run() {
 			// onProgressUpdate: console.log,
 		})
 		// 上传结果
-		console.log('============================================================'.bgGreen);
-		console.log(`项目名称：${config.projectname}(${config.appid})\n项目版本：${version}\n打包环境：${process.env.NODE_ENV}\n上传结果：成功\n上传时间：${nowDate()}`.green);
-		console.log('提示信息：测试、发包直接前往：小程序后台管理【版本管理】中扫码体验、测试、发包！'.yellow);
-		// console.log(uploadResult);
-		console.log('============================================================'.bgGreen);
+		console.log('============================================================'.bgGreen)
+		console.log(`项目名称：${config.projectname}(${config.appid})\n项目版本：${version}\n打包环境：${process.env.NODE_ENV}\n上传结果：成功\n上传时间：${nowDate()}`.green)
+		console.log('提示信息：测试、发包直接前往：小程序后台管理【版本管理】中扫码体验、测试、发包！'.yellow)
+		// console.log(result)
+		console.log('============================================================'.bgGreen)
 		// 记录日志
 		setLog(`上传成功！`)
 		// 结束脚本
