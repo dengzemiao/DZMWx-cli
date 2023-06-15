@@ -1,5 +1,5 @@
 {
-  "name": "wxci",
+  "name": "wxcli",
   "version": "1.0.0",
   "description": "快捷发布微信小程序",
   "scripts": {
