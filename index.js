@@ -99,6 +99,8 @@ async function run() {
 	} catch (error) {
 		// 验证码有误
 		console.log(error.message.red)
+		// 记录日志
+		setLog(`${error.message}！`)
 		// 结束脚本
 		process.exit(1)
 	}
